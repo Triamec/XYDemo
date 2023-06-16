@@ -35,7 +35,7 @@ namespace Triamec.Tam.Samples {
         /// </summary>
         // CAUTION!
         // Selecting the wrong axis can have unintended consequences.
-        const string AxisName = "T";
+        const string AxisName = "Y";
 
         /// <summary>
         /// The distance to move when pressing one of the move buttons.
