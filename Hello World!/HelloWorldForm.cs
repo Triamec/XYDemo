@@ -36,7 +36,7 @@ namespace Triamec.Tam.Samples {
         // CAUTION!
         // Selecting the wrong axis can have unintended consequences.
         const string yAxisName = "Y";
-        const string xAxisName = "X";
+        const string xAxisName = "Xtrans";
 
         /// <summary>
         /// The distance to move when pressing one of the move buttons.
@@ -66,8 +66,10 @@ namespace Triamec.Tam.Samples {
         TamAxis _yAxis;
         TamAxis _xAxis;
 
-        float _velocityMaximum;
-        string _unit;
+        float _yVelocityMaximum;
+        float _xVelocityMaximum;
+        string _yUnit;
+        string _xUnit;
 
         /// <summary>
         /// Prepares the TAM system.
@@ -122,25 +124,31 @@ namespace Triamec.Tam.Samples {
             // "Leaves" means that the search doesn't continue within TamAxis nodes.
             _yAxis = system.AsDepthFirstLeaves<TamAxis>().FirstOrDefault(a => a.Name == yAxisName);
             if (_yAxis == null) throw new TamException(Resources.NoAxisMessage);
+            _xAxis = system.AsDepthFirstLeaves<TamAxis>().FirstOrDefault(a => a.Name == xAxisName);
+            if (_xAxis == null) throw new TamException(Resources.NoAxisMessage);
 
             // Most drives get integrated into a real time control system. Accessing them via TAM API like we do here is considered
             // a secondary use case. Tell the axis that we're going to take control. Otherwise, the axis might reject our commands.
             // You should not do this, though, when this application is about to access the drive via the PCI interface.
             _yAxis.ControlSystemTreatment.Override(enabled: true);
+            _xAxis.ControlSystemTreatment.Override(enabled: true);
 
             // Simulation always starts up with LinkNotReady error, which we acknowledge.
             if (_offline) _yAxis.Drive.ResetFault();
 
             // Get the register layout of the axis
             // and cast it to the RLID-specific register layout.
-            var register = (Axis)_yAxis.Register;
+            var yRegister = (Axis)_yAxis.Register;
+            var xRegister = (Axis)_xAxis.Register;
 
             // Read and cache the original velocity maximum value,
             // which was applied from the configuration file.
-            _velocityMaximum = register.Parameters.PathPlanner.VelocityMaximum.Read();
+            _yVelocityMaximum = yRegister.Parameters.PathPlanner.VelocityMaximum.Read();
+            _xVelocityMaximum = xRegister.Parameters.PathPlanner.VelocityMaximum.Read();
 
             // Cache the position unit.
-            _unit = register.Parameters.PositionController.PositionUnit.Read().ToString();
+            _yUnit = yRegister.Parameters.PositionController.PositionUnit.Read().ToString();
+            _xUnit = xRegister.Parameters.PositionController.PositionUnit.Read().ToString();
 
             // Start displaying the position in regular intervals.
             _timer.Start();
@@ -164,9 +172,11 @@ namespace Triamec.Tam.Samples {
 
             // Set the drive operational, i.e. switch the power section on.
             _yAxis.Drive.SwitchOn();
+            _xAxis.Drive.SwitchOn();
 
             // Reset any axis error and enable the axis controller.
             _yAxis.Control(AxisControlCommands.ResetErrorAndEnable);
+            _xAxis.Control(AxisControlCommands.ResetErrorAndEnable);
         }
 
         /// <exception cref="TamException">Disabling failed.</exception>
@@ -174,9 +184,11 @@ namespace Triamec.Tam.Samples {
 
             // Disable the axis controller.
             _yAxis.Control(AxisControlCommands.Disable);
+            _xAxis.Control(AxisControlCommands.Disable);
 
             // Switch the power section off.
             _yAxis.Drive.SwitchOff();
+            _xAxis.Drive.SwitchOff();
         }
 
         /// <summary>
@@ -191,8 +203,10 @@ namespace Triamec.Tam.Samples {
             // _yAxis.MoveRelative(Math.Sign(sign) * Distance, _velocityMaximum * _velocitySlider.Value * 0.01f);
 
             _yAxis.MoveAbsolute(yStartPosition);
+            _xAxis.MoveAbsolute(xStartPosition);
             System.Threading.Thread.Sleep(500);
-            _yAxis.MoveRelative(Math.Sign(sign) * Distance, _velocityMaximum * _velocitySlider.Value * 0.01f);
+            _yAxis.MoveRelative(Math.Sign(sign) * Distance, _yVelocityMaximum * _velocitySlider.Value * 0.01f);
+            _xAxis.MoveRelative(xStepLength);
         }
 
         /// <summary>
@@ -202,7 +216,7 @@ namespace Triamec.Tam.Samples {
             var register = (Axis)_yAxis.Register;
             var positionRegister = register.Signals.PositionController.MasterPosition;
             var position = positionRegister.Read();
-            _positionBox.Text = $"{position:F2} {_unit}";
+            _positionBox.Text = $"{position:F2} {_yUnit}";
         }
         #endregion Hello world code
 
