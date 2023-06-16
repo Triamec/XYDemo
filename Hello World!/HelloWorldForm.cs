@@ -45,6 +45,14 @@ namespace Triamec.Tam.Samples {
         // Additionally, the encoder must be correctly configured.
         // Consider any limit stops.
         const double Distance = 90;
+        const double yMin = -100;
+        const double yMax = 100;
+        const double xMin = -100;
+        const double xMax = 100;
+        const double yStartPosition = yMin;
+        const double xStartPosition = xMin;
+        const int xNumberOfSteps = 5;
+        const double xStepLength = (xMax - xMin)/xNumberOfSteps;
 
         /// <summary>
         /// Whether to use a (rather simplified) simulation of the axis.
