@@ -53,7 +53,7 @@ namespace Triamec.Tam.Samples {
         const int xNumberOfSteps = 5;
         const int sleepTime = 500;
         TimeSpan successTimeout = new TimeSpan(0,0,5);
-        const double yStartPosition = yMin;
+        const double yStartPosition = yMax;
         const double xStartPosition = xMin;
         const double xStepLength = (xMax - xMin)/xNumberOfSteps;
 
@@ -136,8 +136,8 @@ namespace Triamec.Tam.Samples {
             _yAxis.ControlSystemTreatment.Override(enabled: true);
             _xAxis.ControlSystemTreatment.Override(enabled: true);
 
-            _yAxis.Drive.AddStateObserver(_yAxis);
-            _xAxis.Drive.AddStateObserver(_xAxis);
+            _yAxis.Drive.AddStateObserver(this);
+            _xAxis.Drive.AddStateObserver(this);
 
             // Simulation always starts up with LinkNotReady error, which we acknowledge.
             if (_offline) _yAxis.Drive.ResetFault();
@@ -204,10 +204,7 @@ namespace Triamec.Tam.Samples {
         /// <exception cref="TamException">Moving failed.</exception>
         void MoveAxis(int sign) {
 
-            // Move a distance with dedicated velocity.
-            // If the axis is just moving, it is reprogrammed with this command.
-            // _yAxis.MoveRelative(Math.Sign(sign) * Distance, _velocityMaximum * _velocitySlider.Value * 0.01f);
-
+            // Start Demo move
             _yAxis.MoveAbsolute(yStartPosition).WaitForSuccess(successTimeout);
             _xAxis.MoveAbsolute(xStartPosition).WaitForSuccess(successTimeout);
             System.Threading.Thread.Sleep(sleepTime);
@@ -218,7 +215,14 @@ namespace Triamec.Tam.Samples {
                 _xAxis.MoveRelative(xStepLength).WaitForSuccess(successTimeout);
                 System.Threading.Thread.Sleep(sleepTime);
             }
-            
+            _xAxis.MoveAbsolute(xMax).WaitForSuccess(successTimeout);
+            _yAxis.MoveAbsolute(yMax).WaitForSuccess(successTimeout);
+            System.Threading.Thread.Sleep(sleepTime);
+            for (int i = 0; i < xNumberOfSteps; i++) {
+                _xAxis.MoveRelative(xStepLength).WaitForSuccess(successTimeout);
+                System.Threading.Thread.Sleep(sleepTime);
+            }
+
         }
 
         /// <summary>
