@@ -71,9 +71,6 @@ namespace Triamec.Tam.Samples {
         TamAxis _yAxis;
         TamAxis _xAxis;
         
-
-        float _yVelocityMaximum;
-        float _xVelocityMaximum;
         string _yUnit;
         string _xUnit;
 
@@ -150,11 +147,6 @@ namespace Triamec.Tam.Samples {
             var yRegister = (Axis)_yAxis.Register;
             var xRegister = (Axis)_xAxis.Register;
 
-            // Read and cache the original velocity maximum value,
-            // which was applied from the configuration file.
-            _yVelocityMaximum = yRegister.Parameters.PathPlanner.VelocityMaximum.Read();
-            _xVelocityMaximum = xRegister.Parameters.PathPlanner.VelocityMaximum.Read();
-
             // Cache the position unit.
             _yUnit = yRegister.Parameters.PositionController.PositionUnit.Read().ToString();
             _xUnit = xRegister.Parameters.PositionController.PositionUnit.Read().ToString();
@@ -176,17 +168,6 @@ namespace Triamec.Tam.Samples {
             // symbol during runtime originating from the Tam.Simulation library.
             SimulationFactory.FromConfiguration(configuration, null);
 
-        /// <exception cref="TamException">Enabling failed.</exception>
-        void EnableDrive() {
-
-            // Set the drive operational, i.e. switch the power section on.
-            _yAxis.Drive.SwitchOn();
-            _xAxis.Drive.SwitchOn();
-
-            // Reset any axis error and enable the axis controller.
-            _yAxis.Control(AxisControlCommands.ResetErrorAndEnable);
-            _xAxis.Control(AxisControlCommands.ResetErrorAndEnable);
-        }
 
         /// <exception cref="TamException">Disabling failed.</exception>
         void DisableDrive() {
