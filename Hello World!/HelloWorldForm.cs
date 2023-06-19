@@ -202,18 +202,18 @@ namespace Triamec.Tam.Samples {
         /// </summary>
         /// <param name="sign">A positive or negative value indicating the direction of the motion.</param>
         /// <exception cref="TamException">Moving failed.</exception>
-        void MoveAxis(int sign) {
+        async void MoveAxis(int sign) {
 
             // Start Demo move
             var yRequest = _yAxis.MoveAbsolute(yStartPosition);
             var xRequest = _xAxis.MoveAbsolute(xStartPosition);
-            yRequest.WaitForSuccess(moveTimeout);
-            xRequest.WaitForSuccess(moveTimeout);
+            await yRequest.WaitForSuccessAsync(moveTimeout);
+            await xRequest.WaitForSuccessAsync(moveTimeout);
             System.Threading.Thread.Sleep(sleepTime);
             yRequest = _yAxis.MoveAbsolute(yMin);
             xRequest = _xAxis.MoveAbsolute(xMax);
-            yRequest.WaitForSuccess(moveTimeout);
-            xRequest.WaitForSuccess(moveTimeout);
+            await yRequest.WaitForSuccessAsync(moveTimeout);
+            await xRequest.WaitForSuccessAsync(moveTimeout);
             System.Threading.Thread.Sleep(sleepTime);
             for (int i = 0; i < xNumberOfSteps; i++) {
                 _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
@@ -221,8 +221,8 @@ namespace Triamec.Tam.Samples {
             }
             yRequest = _yAxis.MoveAbsolute(yMax);
             xRequest = _xAxis.MoveAbsolute(xMax);
-            yRequest.WaitForSuccess(moveTimeout);
-            xRequest.WaitForSuccess(moveTimeout);
+            await yRequest.WaitForSuccessAsync(moveTimeout);
+            await xRequest.WaitForSuccessAsync(moveTimeout);
             System.Threading.Thread.Sleep(sleepTime);
             for (int i = 0; i < xNumberOfSteps; i++) {
                 _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
