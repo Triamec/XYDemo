@@ -206,46 +206,32 @@ namespace Triamec.Tam.Samples {
         /// <param name="sign">A positive or negative value indicating the direction of the motion.</param>
         /// <exception cref="TamException">Moving failed.</exception>
         async void MoveAxis() {
-
-            //Requests.TamRequest yRequest2;
-            //Requests.TamRequest xRequest2;
-
-            
+  
             // Set the drive operational, i.e. switch the power section on.
             _yAxis.Drive.SwitchOn();
             _xAxis.Drive.SwitchOn();
 
             // Reset any axis error and enable the axis controller.
-            _yAxis.Control(AxisControlCommands.ResetError);
-            _xAxis.Control(AxisControlCommands.ResetError);
-            // +++ Wait
-            
+            await _yAxis.Control(AxisControlCommands.ResetError).WaitForSuccessAsync(enableTimeout);
+            await _xAxis.Control(AxisControlCommands.ResetError).WaitForSuccessAsync(enableTimeout);            
 
             // Enable axes if necessary
             if (_yAxis.ReadAxisState() == AxisState.Disabled) {
-                var yRequest2 = _yAxis.Control(AxisControlCommands.Enable);
-                await yRequest2.WaitForSuccessAsync(enableTimeout);
+                await _yAxis.Control(AxisControlCommands.Enable).WaitForSuccessAsync(enableTimeout);
             }
             if (_xAxis.ReadAxisState() == AxisState.Disabled) {
-                var xRequest2 = _xAxis.Control(AxisControlCommands.Enable);
-                await xRequest2.WaitForSuccessAsync(enableTimeout);
-            }
-
-            while(_xAxis.ReadAxisState() == AxisState.Enabling) {
-                await Task.Delay(100);
-            }
-
-            while (_yAxis.ReadAxisState() == AxisState.Enabling) {
-                await Task.Delay(100);
+                await _xAxis.Control(AxisControlCommands.Enable).WaitForSuccessAsync(enableTimeout);
             }
 
             // Start Demo move
             try {
+                // Go to start position
                 var yRequest = _yAxis.MoveAbsolute(yStartPosition);
                 var xRequest = _xAxis.MoveAbsolute(xStartPosition);
                 await yRequest.WaitForSuccessAsync(moveTimeout);
                 await xRequest.WaitForSuccessAsync(moveTimeout);
                 await Task.Delay(sleepTime);
+                // Loop move until stopped
                 while (true) {
                     yRequest = _yAxis.MoveAbsolute(yMin);
                     xRequest = _xAxis.MoveAbsolute(xMax);
