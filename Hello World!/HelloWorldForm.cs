@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Triamec.Tam.Configuration;
 using Triamec.Tam.Samples.Properties;
@@ -209,24 +210,24 @@ namespace Triamec.Tam.Samples {
             var xRequest = _xAxis.MoveAbsolute(xStartPosition);
             await yRequest.WaitForSuccessAsync(moveTimeout);
             await xRequest.WaitForSuccessAsync(moveTimeout);
-            System.Threading.Thread.Sleep(sleepTime);
+            await Task.Delay(sleepTime);
             yRequest = _yAxis.MoveAbsolute(yMin);
             xRequest = _xAxis.MoveAbsolute(xMax);
             await yRequest.WaitForSuccessAsync(moveTimeout);
             await xRequest.WaitForSuccessAsync(moveTimeout);
-            System.Threading.Thread.Sleep(sleepTime);
+            await Task.Delay(sleepTime);
             for (int i = 0; i < xNumberOfSteps; i++) {
                 _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
-                System.Threading.Thread.Sleep(sleepTime);
+                await Task.Delay(sleepTime);
             }
             yRequest = _yAxis.MoveAbsolute(yMax);
             xRequest = _xAxis.MoveAbsolute(xMax);
             await yRequest.WaitForSuccessAsync(moveTimeout);
             await xRequest.WaitForSuccessAsync(moveTimeout);
-            System.Threading.Thread.Sleep(sleepTime);
+            await Task.Delay(sleepTime);
             for (int i = 0; i < xNumberOfSteps; i++) {
                 _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
-                System.Threading.Thread.Sleep(sleepTime);
+                await Task.Delay(sleepTime);
             }
 
         }
