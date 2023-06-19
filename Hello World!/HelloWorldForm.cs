@@ -276,7 +276,7 @@ namespace Triamec.Tam.Samples {
         /// <summary>
         /// Measures the axis position and shows it in the GUI.
         /// </summary>
-        void ReadPosition() {
+        void yReadPosition() {
             var register = (Axis)_yAxis.Register;
             var positionRegister = register.Signals.PositionController.MasterPosition;
             var position = positionRegister.Read();
@@ -292,7 +292,7 @@ namespace Triamec.Tam.Samples {
 
             try {
                 Startup();
-                _driveGroupBox.Enabled = true;
+                //_driveGroupBox.Enabled = true;
             } catch (TamException ex) {
                 MessageBox.Show(this, ex.FullMessage(), Resources.StartupErrorCaption, MessageBoxButtons.OK,
                     MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0);
@@ -373,9 +373,26 @@ namespace Triamec.Tam.Samples {
         #endregion Menu handler methods
 
         #region Timer methods
-        void OnTimerTick(object sender, EventArgs e) => ReadPosition();
+        void OnTimerTick(object sender, EventArgs e) => yReadPosition();
 
         #endregion Timer methods
+
         #endregion GUI handler methods
+
+        private void label4_Click(object sender, EventArgs e) {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void _positionBox_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e) {
+
+        }
     }
 }
