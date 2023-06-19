@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Triamec.Tam.Configuration;
@@ -206,10 +207,10 @@ namespace Triamec.Tam.Samples {
         /// <exception cref="TamException">Moving failed.</exception>
         async void MoveAxis() {
 
-            Requests.TamRequest yRequest2;
-            Requests.TamRequest xRequest2;
+            //Requests.TamRequest yRequest2;
+            //Requests.TamRequest xRequest2;
 
-            /*
+            
             // Set the drive operational, i.e. switch the power section on.
             _yAxis.Drive.SwitchOn();
             _xAxis.Drive.SwitchOn();
@@ -217,42 +218,58 @@ namespace Triamec.Tam.Samples {
             // Reset any axis error and enable the axis controller.
             _yAxis.Control(AxisControlCommands.ResetErrorAndEnable);
             _xAxis.Control(AxisControlCommands.ResetErrorAndEnable);
-            */
+            
 
             // Enable axes if necessary
             if (_yAxis.ReadAxisState() == AxisState.Disabled) {
-                yRequest2 = _yAxis.Control(AxisControlCommands.Enable);
+                var yRequest2 = _yAxis.Control(AxisControlCommands.Enable);
                 await yRequest2.WaitForSuccessAsync(enableTimeout);
             }
             if (_xAxis.ReadAxisState() == AxisState.Disabled) {
-                xRequest2 = _xAxis.Control(AxisControlCommands.Enable);
+                var xRequest2 = _xAxis.Control(AxisControlCommands.Enable);
                 await xRequest2.WaitForSuccessAsync(enableTimeout);
             }
 
+            while(_xAxis.ReadAxisState() == AxisState.Enabling) {
+                await Task.Delay(100);
+            }
+
+            while (_yAxis.ReadAxisState() == AxisState.Enabling) {
+                await Task.Delay(100);
+            }
+
             // Start Demo move
-            var yRequest = _yAxis.MoveAbsolute(yStartPosition);
-            var xRequest = _xAxis.MoveAbsolute(xStartPosition);
-            await yRequest.WaitForSuccessAsync(moveTimeout);
-            await xRequest.WaitForSuccessAsync(moveTimeout);
-            await Task.Delay(sleepTime);
-            yRequest = _yAxis.MoveAbsolute(yMin);
-            xRequest = _xAxis.MoveAbsolute(xMax);
-            await yRequest.WaitForSuccessAsync(moveTimeout);
-            await xRequest.WaitForSuccessAsync(moveTimeout);
-            await Task.Delay(sleepTime);
-            for (int i = 0; i < xNumberOfSteps; i++) {
-                _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
-                await Task.Delay(sleepTime);
+            try {
+                while(true) {
+                    var yRequest = _yAxis.MoveAbsolute(yStartPosition);
+                    var xRequest = _xAxis.MoveAbsolute(xStartPosition);
+                    await yRequest.WaitForSuccessAsync(moveTimeout);
+                    await xRequest.WaitForSuccessAsync(moveTimeout);
+                    await Task.Delay(sleepTime);
+                    yRequest = _yAxis.MoveAbsolute(yMin);
+                    xRequest = _xAxis.MoveAbsolute(xMax);
+                    await yRequest.WaitForSuccessAsync(moveTimeout);
+                    await xRequest.WaitForSuccessAsync(moveTimeout);
+                    await Task.Delay(sleepTime);
+                    for (int i = 0; i < xNumberOfSteps; i++) {
+                        _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
+                        await Task.Delay(sleepTime);
+                    }
+                    yRequest = _yAxis.MoveAbsolute(yMax);
+                    xRequest = _xAxis.MoveAbsolute(xMax);
+                    await yRequest.WaitForSuccessAsync(moveTimeout);
+                    await xRequest.WaitForSuccessAsync(moveTimeout);
+                    await Task.Delay(sleepTime);
+                    for (int i = 0; i < xNumberOfSteps; i++) {
+                        _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
+                        await Task.Delay(sleepTime);
+                    }
+                }
+            } 
+            catch(AxisCommandRejectedException) {
+                //do nothing
             }
-            yRequest = _yAxis.MoveAbsolute(yMax);
-            xRequest = _xAxis.MoveAbsolute(xMax);
-            await yRequest.WaitForSuccessAsync(moveTimeout);
-            await xRequest.WaitForSuccessAsync(moveTimeout);
-            await Task.Delay(sleepTime);
-            for (int i = 0; i < xNumberOfSteps; i++) {
-                _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
-                await Task.Delay(sleepTime);
-            }
+
 
         }
 
@@ -342,12 +359,6 @@ namespace Triamec.Tam.Samples {
                 _yAxis.Stop();
                 _xAxis.Stop();
                 DisableDrive();
-            } 
-            catch(AxisCommandRejectedException) {
-                //do nothing
-            } 
-            catch (CommandRejectedException) {
-                //do nothing
             } 
             catch (TamException ex) {
                 MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
