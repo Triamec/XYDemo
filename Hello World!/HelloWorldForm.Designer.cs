@@ -99,7 +99,6 @@
             // 
             resources.ApplyResources(label4, "label4");
             label4.Name = "label4";
-            label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // measurementGroupBox
             // 
@@ -115,7 +114,6 @@
             // 
             resources.ApplyResources(label1, "label1");
             label1.Name = "label1";
-            label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // _xPositionBox
             // 
@@ -128,7 +126,6 @@
             resources.ApplyResources(this._yPositionBox, "_yPositionBox");
             this._yPositionBox.Name = "_yPositionBox";
             this._yPositionBox.ReadOnly = true;
-            this._yPositionBox.TextChanged += new System.EventHandler(this._positionBox_TextChanged);
             // 
             // _timer
             // 

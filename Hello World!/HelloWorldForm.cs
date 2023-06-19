@@ -384,17 +384,5 @@ namespace Triamec.Tam.Samples {
 
         #endregion GUI handler methods
 
-        private void label4_Click(object sender, EventArgs e) {
-
-        }
-
-
-        private void _positionBox_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e) {
-
-        }
     }
 }
