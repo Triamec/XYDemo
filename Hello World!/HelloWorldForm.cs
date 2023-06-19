@@ -60,12 +60,6 @@ namespace Triamec.Tam.Samples {
         static readonly double xStartPosition = xMin;
         static readonly double xStepLength = (xMax - xMin)/xNumberOfSteps;
 
-        /// <summary>
-        /// Whether to use a (rather simplified) simulation of the axis.
-        /// </summary>
-        // CAUTION!
-        // Ensure the above constants are properly configured before setting this to false.
-        readonly bool _offline = false;
 
         TamTopology _topology;
         TamAxis _yAxis;
@@ -95,32 +89,16 @@ namespace Triamec.Tam.Samples {
             components.Add(_topology);
 
             TamSystem system;
-            if (_offline) {
-                using (var deserializer = new Deserializer()) {
 
-                    // Load and add a simulated TAM system as defined in the .TAMcfg file.
-                    deserializer.Load(ConfigurationPath);
-                    var adapters = CreateSimulatedTriaLinkAdapters(deserializer.Configuration).First();
-                    system = _topology.ConnectTo(adapters.Key, adapters.ToArray());
+            // Add the local TAM system on this PC to the topology.
+            system = _topology.AddLocalSystem();
 
-                    // Boot the Tria-Link so that it learns about connected stations.
-                    system.Identify();
-                }
+            // Boot the Tria-Link so that it learns about connected stations.
+            system.Identify();
 
-                // Load a TAM configuration.
-                // This API doesn't feature GUI. Refer to the Gear Up! example which uses an API exposing a GUI.
-                _topology.Load(ConfigurationPath);
-            } else {
-
-                // Add the local TAM system on this PC to the topology.
-                system = _topology.AddLocalSystem();
-
-                // Boot the Tria-Link so that it learns about connected stations.
-                system.Identify();
-
-                // Don't load TAM configuration, assuming that the drive is already configured,
-                // for example since parametrization is persisted in the drive.
-            }
+            // Don't load TAM configuration, assuming that the drive is already configured,
+            // for example since parametrization is persisted in the drive.
+            
 
             // Find the axis with the configured name in the Tria-Link.
             // The AsDepthFirstLeaves extension method performs a tree search an returns all instances of type TamAxis.
@@ -138,9 +116,6 @@ namespace Triamec.Tam.Samples {
 
             _yAxis.Drive.AddStateObserver(this);
             _xAxis.Drive.AddStateObserver(this);
-
-            // Simulation always starts up with LinkNotReady error, which we acknowledge.
-            if (_offline) _yAxis.Drive.ResetFault();
 
             // Get the register layout of the axis
             // and cast it to the RLID-specific register layout.
