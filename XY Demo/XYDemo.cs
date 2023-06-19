@@ -28,10 +28,6 @@ namespace Triamec.Tam.Samples {
         #endregion Constructor
 
         #region Hello world code
-        /// <summary>
-        /// The configuration file for simulated mode.
-        /// </summary>
-        const string ConfigurationPath = "HelloWorld.TAMcfg";
 
         /// <summary>
         /// The name of the axis this demo works with.
@@ -161,7 +157,7 @@ namespace Triamec.Tam.Samples {
         /// </summary>
         /// <param name="sign">A positive or negative value indicating the direction of the motion.</param>
         /// <exception cref="TamException">Moving failed.</exception>
-        async void MoveAxis() {
+        async Task MoveAxis() {
   
             // Set the drive operational, i.e. switch the power section on.
             _yAxis.Drive.SwitchOn();
@@ -272,11 +268,11 @@ namespace Triamec.Tam.Samples {
 
         #region Button handler methods
 
-        void OnStartButtonClick(object sender, EventArgs e) {
+        async void OnStartButtonClick(object sender, EventArgs e) {
             try {
                 _StopButton.Enabled = true;
                 _StartButton.Enabled = false;
-                MoveAxis();
+                await MoveAxis();
             } catch (TamException ex) {
                 MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
                     MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);

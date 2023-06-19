@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Triamec.Tam.Samples</RootNamespace>
-    <AssemblyName>Hello World!</AssemblyName>
+    <AssemblyName>XY Demo</AssemblyName>
     <ApplicationIcon>Properties\App.ico</ApplicationIcon>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
@@ -38,7 +38,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Hello World!.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\XY Demo.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>

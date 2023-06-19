@@ -1821,8 +1821,5 @@
         </TamDevice>
       </Children>
     </TamStation>
-    <TamStation Name="TL" Type="TL" LocalNodeNumber="0" HardwareSerialNumber="502" HardwareRevision="1" FpgaFirmwareId="69379" PeripheryLayoutId="2">
-      <Children />
-    </TamStation>
   </Stations>
 </TamTopology>
