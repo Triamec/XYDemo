@@ -316,31 +316,6 @@ namespace Triamec.Tam.Samples {
 
         #region Button handler methods
 
-        void OnEnableButtonClick(object sender, EventArgs e) {
-            try {
-                EnableDrive();
-            } catch (TamException ex) {
-                MessageBox.Show(ex.Message, Resources.EnablingErrorCaption, MessageBoxButtons.OK,
-                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
-            }
-
-            // Note: a more elaborated application would change button states depending on what's the drive reporting,
-            // following the MVC concept.
-            _StartButton.Enabled = true;
-            _StopButton.Enabled = true;
-        }
-
-        void OnDisableButtonClick(object sender, EventArgs e) {
-            _StartButton.Enabled = false;
-            _StopButton.Enabled = false;
-            try {
-                DisableDrive();
-            } catch (TamException ex) {
-                MessageBox.Show(ex.Message, Resources.DisablingErrorCaption, MessageBoxButtons.OK,
-                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
-            }
-        }
-
         void OnStartButtonClick(object sender, EventArgs e) {
             try {
                 _StopButton.Enabled = true;
