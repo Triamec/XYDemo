@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Triamec.Tam.Samples.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="yMin" Description="Minimum value Y Axis" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">-100</Value>
+    </Setting>
+    <Setting Name="yMax" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="xMin" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">-100</Value>
+    </Setting>
+    <Setting Name="xMax" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="xNumberOfSteps" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="sleepTime" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">500</Value>
+    </Setting>
+    <Setting Name="yAxisName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Y</Value>
+    </Setting>
+    <Setting Name="xAxisName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Xtrans</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

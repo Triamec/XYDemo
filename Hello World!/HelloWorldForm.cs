@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -37,8 +38,8 @@ namespace Triamec.Tam.Samples {
         /// </summary>
         // CAUTION!
         // Selecting the wrong axis can have unintended consequences.
-        const string yAxisName = "Y";
-        const string xAxisName = "Xtrans";
+        static readonly string yAxisName = Settings.Default.yAxisName;
+        static readonly string xAxisName = Settings.Default.xAxisName;
 
         /// <summary>
         /// The distance to move when pressing one of the move buttons.
@@ -47,18 +48,17 @@ namespace Triamec.Tam.Samples {
         // The unit of this constant depends on the PositionUnit parameter provided with the TAM configuration.
         // Additionally, the encoder must be correctly configured.
         // Consider any limit stops.
-        const double Distance = 90;
-        const double yMin = -100;
-        const double yMax = 100;
-        const double xMin = -100;
-        const double xMax = 100;
-        const int xNumberOfSteps = 5;
-        const int sleepTime = 500;
+        static readonly double yMin = Settings.Default.yMin;
+        static readonly double yMax = Settings.Default.yMax;
+        static readonly double xMin = Settings.Default.xMin;
+        static readonly double xMax = Settings.Default.xMax;
+        static readonly int xNumberOfSteps = Settings.Default.xNumberOfSteps;
+        static readonly int sleepTime = Settings.Default.sleepTime;
         TimeSpan moveTimeout = new TimeSpan(0,0,10);
         TimeSpan enableTimeout = new TimeSpan(0, 0, 10);
-        const double yStartPosition = yMax;
-        const double xStartPosition = xMin;
-        const double xStepLength = (xMax - xMin)/xNumberOfSteps;
+        static readonly double yStartPosition = yMax;
+        static readonly double xStartPosition = xMin;
+        static readonly double xStepLength = (xMax - xMin)/xNumberOfSteps;
 
         /// <summary>
         /// Whether to use a (rather simplified) simulation of the axis.
@@ -216,8 +216,9 @@ namespace Triamec.Tam.Samples {
             _xAxis.Drive.SwitchOn();
 
             // Reset any axis error and enable the axis controller.
-            _yAxis.Control(AxisControlCommands.ResetErrorAndEnable);
-            _xAxis.Control(AxisControlCommands.ResetErrorAndEnable);
+            _yAxis.Control(AxisControlCommands.ResetError);
+            _xAxis.Control(AxisControlCommands.ResetError);
+            // +++ Wait
             
 
             // Enable axes if necessary
@@ -401,9 +402,6 @@ namespace Triamec.Tam.Samples {
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e) {
-
-        }
 
         private void _positionBox_TextChanged(object sender, EventArgs e) {
 

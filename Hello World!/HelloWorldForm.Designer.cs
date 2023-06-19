@@ -122,7 +122,6 @@
             resources.ApplyResources(this._xPositionBox, "_xPositionBox");
             this._xPositionBox.Name = "_xPositionBox";
             this._xPositionBox.ReadOnly = true;
-            this._xPositionBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // _yPositionBox
             // 
