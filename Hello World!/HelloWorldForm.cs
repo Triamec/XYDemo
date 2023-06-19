@@ -54,6 +54,7 @@ namespace Triamec.Tam.Samples {
         const int xNumberOfSteps = 5;
         const int sleepTime = 500;
         TimeSpan moveTimeout = new TimeSpan(0,0,10);
+        TimeSpan enableTimeout = new TimeSpan(0, 0, 10);
         const double yStartPosition = yMax;
         const double xStartPosition = xMin;
         const double xStepLength = (xMax - xMin)/xNumberOfSteps;
@@ -203,7 +204,30 @@ namespace Triamec.Tam.Samples {
         /// </summary>
         /// <param name="sign">A positive or negative value indicating the direction of the motion.</param>
         /// <exception cref="TamException">Moving failed.</exception>
-        async void MoveAxis(int sign) {
+        async void MoveAxis() {
+
+            Requests.TamRequest yRequest2;
+            Requests.TamRequest xRequest2;
+
+            /*
+            // Set the drive operational, i.e. switch the power section on.
+            _yAxis.Drive.SwitchOn();
+            _xAxis.Drive.SwitchOn();
+
+            // Reset any axis error and enable the axis controller.
+            _yAxis.Control(AxisControlCommands.ResetErrorAndEnable);
+            _xAxis.Control(AxisControlCommands.ResetErrorAndEnable);
+            */
+
+            // Enable axes if necessary
+            if (_yAxis.ReadAxisState() == AxisState.Disabled) {
+                yRequest2 = _yAxis.Control(AxisControlCommands.Enable);
+                await yRequest2.WaitForSuccessAsync(enableTimeout);
+            }
+            if (_xAxis.ReadAxisState() == AxisState.Disabled) {
+                xRequest2 = _xAxis.Control(AxisControlCommands.Enable);
+                await xRequest2.WaitForSuccessAsync(enableTimeout);
+            }
 
             // Start Demo move
             var yRequest = _yAxis.MoveAbsolute(yStartPosition);
@@ -300,19 +324,32 @@ namespace Triamec.Tam.Samples {
             }
         }
 
-        void OnStopButtonClick(object sender, EventArgs e) {
+        void OnStartButtonClick(object sender, EventArgs e) {
             try {
-                MoveAxis(-1);
+                _StopButton.Enabled = true;
+                _StartButton.Enabled = false;
+                MoveAxis();
             } catch (TamException ex) {
                 MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
                     MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
             }
         }
 
-        void OnStartButtonClick(object sender, EventArgs e) {
+        void OnStopButtonClick(object sender, EventArgs e) {
             try {
-                MoveAxis(1);
-            } catch (TamException ex) {
+                _StopButton.Enabled = false;
+                _StartButton.Enabled = true;
+                _yAxis.Stop();
+                _xAxis.Stop();
+                DisableDrive();
+            } 
+            catch(AxisCommandRejectedException) {
+                //do nothing
+            } 
+            catch (CommandRejectedException) {
+                //do nothing
+            } 
+            catch (TamException ex) {
                 MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
                     MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
             }

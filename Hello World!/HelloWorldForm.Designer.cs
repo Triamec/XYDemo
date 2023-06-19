@@ -142,7 +142,7 @@
             this._StartButton.Name = "_StartButton";
             this._toolTip.SetToolTip(this._StartButton, resources.GetString("_StartButton.ToolTip"));
             this._StartButton.UseVisualStyleBackColor = true;
-            this._StartButton.Click += new System.EventHandler(this.OnStopButtonClick);
+            this._StartButton.Click += new System.EventHandler(this.OnStartButtonClick);
             // 
             // _StopButton
             // 
@@ -150,7 +150,7 @@
             this._StopButton.Name = "_StopButton";
             this._toolTip.SetToolTip(this._StopButton, resources.GetString("_StopButton.ToolTip"));
             this._StopButton.UseVisualStyleBackColor = true;
-            this._StopButton.Click += new System.EventHandler(this.OnStartButtonClick);
+            this._StopButton.Click += new System.EventHandler(this.OnStopButtonClick);
             // 
             // label4
             // 

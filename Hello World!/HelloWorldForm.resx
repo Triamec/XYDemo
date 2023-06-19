@@ -360,9 +360,6 @@
   <data name="&gt;&gt;_velocitySlider.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="_StartButton.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="_StartButton.Font" type="System.Drawing.Font, System.Drawing">
     <value>Verdana, 14.25pt, style=Bold, Italic</value>
   </data>
