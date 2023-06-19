@@ -1,5 +1,5 @@
 ﻿namespace Triamec.Tam.Samples {
-    partial class HelloWorldForm {
+    partial class XYDemo {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -27,7 +27,7 @@
             System.Windows.Forms.MenuStrip menuStrip;
             System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
             System.Windows.Forms.ToolStripMenuItem exitMenuItem;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelloWorldForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XYDemo));
             System.Windows.Forms.GroupBox motionGroupBox;
             System.Windows.Forms.Label label4;
             System.Windows.Forms.GroupBox measurementGroupBox;

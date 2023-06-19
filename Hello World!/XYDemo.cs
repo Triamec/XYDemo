@@ -17,12 +17,12 @@ namespace Triamec.Tam.Samples {
     /// <summary>
     /// The main form of the TAM "Hello World!" application.
     /// </summary>
-    internal partial class HelloWorldForm : Form {
+    internal partial class XYDemo : Form {
         #region Constructor
         /// <summary>
-        /// Initializes a new instance of the <see cref="HelloWorldForm"/> class.
+        /// Initializes a new instance of the <see cref="XYDemo"/> class.
         /// </summary>
-        public HelloWorldForm() {
+        public XYDemo() {
             InitializeComponent();
         }
         #endregion Constructor
