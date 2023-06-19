@@ -52,7 +52,7 @@ namespace Triamec.Tam.Samples {
         const double xMax = 100;
         const int xNumberOfSteps = 5;
         const int sleepTime = 500;
-        TimeSpan successTimeout = new TimeSpan(0,0,5);
+        TimeSpan moveTimeout = new TimeSpan(0,0,10);
         const double yStartPosition = yMax;
         const double xStartPosition = xMin;
         const double xStepLength = (xMax - xMin)/xNumberOfSteps;
@@ -205,21 +205,27 @@ namespace Triamec.Tam.Samples {
         void MoveAxis(int sign) {
 
             // Start Demo move
-            _yAxis.MoveAbsolute(yStartPosition).WaitForSuccess(successTimeout);
-            _xAxis.MoveAbsolute(xStartPosition).WaitForSuccess(successTimeout);
+            var yRequest = _yAxis.MoveAbsolute(yStartPosition);
+            var xRequest = _xAxis.MoveAbsolute(xStartPosition);
+            yRequest.WaitForSuccess(moveTimeout);
+            xRequest.WaitForSuccess(moveTimeout);
             System.Threading.Thread.Sleep(sleepTime);
-            _xAxis.MoveAbsolute(xMax).WaitForSuccess(successTimeout);
-            _yAxis.MoveAbsolute(yMin).WaitForSuccess(successTimeout);
+            yRequest = _yAxis.MoveAbsolute(yMin);
+            xRequest = _xAxis.MoveAbsolute(xMax);
+            yRequest.WaitForSuccess(moveTimeout);
+            xRequest.WaitForSuccess(moveTimeout);
             System.Threading.Thread.Sleep(sleepTime);
             for (int i = 0; i < xNumberOfSteps; i++) {
-                _xAxis.MoveRelative(xStepLength).WaitForSuccess(successTimeout);
+                _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
                 System.Threading.Thread.Sleep(sleepTime);
             }
-            _xAxis.MoveAbsolute(xMax).WaitForSuccess(successTimeout);
-            _yAxis.MoveAbsolute(yMax).WaitForSuccess(successTimeout);
+            yRequest = _yAxis.MoveAbsolute(yMax);
+            xRequest = _xAxis.MoveAbsolute(xMax);
+            yRequest.WaitForSuccess(moveTimeout);
+            xRequest.WaitForSuccess(moveTimeout);
             System.Threading.Thread.Sleep(sleepTime);
             for (int i = 0; i < xNumberOfSteps; i++) {
-                _xAxis.MoveRelative(xStepLength).WaitForSuccess(successTimeout);
+                _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
                 System.Threading.Thread.Sleep(sleepTime);
             }
 
