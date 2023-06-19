@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Hello World!")]
-[assembly: AssemblyDescription("Hello world application with the TAM Software")]
+[assembly: AssemblyTitle("XY Demo")]
+[assembly: AssemblyDescription("XY Demo application with the TAM Software")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Triamec Motion AG")]
 [assembly: AssemblyProduct("TAM Software Samples")]
