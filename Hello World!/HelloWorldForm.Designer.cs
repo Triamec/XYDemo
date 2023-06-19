@@ -34,8 +34,8 @@
             System.Windows.Forms.Label label1;
             this._StartButton = new System.Windows.Forms.Button();
             this._StopButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this._positionBox = new System.Windows.Forms.TextBox();
+            this._xPositionBox = new System.Windows.Forms.TextBox();
+            this._yPositionBox = new System.Windows.Forms.TextBox();
             this._toolTip = new System.Windows.Forms.ToolTip(this.components);
             this._timer = new System.Windows.Forms.Timer(this.components);
             menuStrip = new System.Windows.Forms.MenuStrip();
@@ -104,8 +104,8 @@
             // measurementGroupBox
             // 
             measurementGroupBox.Controls.Add(label1);
-            measurementGroupBox.Controls.Add(this.textBox1);
-            measurementGroupBox.Controls.Add(this._positionBox);
+            measurementGroupBox.Controls.Add(this._xPositionBox);
+            measurementGroupBox.Controls.Add(this._yPositionBox);
             measurementGroupBox.Controls.Add(label4);
             resources.ApplyResources(measurementGroupBox, "measurementGroupBox");
             measurementGroupBox.Name = "measurementGroupBox";
@@ -117,19 +117,19 @@
             label1.Name = "label1";
             label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // textBox1
+            // _xPositionBox
             // 
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            resources.ApplyResources(this._xPositionBox, "_xPositionBox");
+            this._xPositionBox.Name = "_xPositionBox";
+            this._xPositionBox.ReadOnly = true;
+            this._xPositionBox.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // _positionBox
+            // _yPositionBox
             // 
-            resources.ApplyResources(this._positionBox, "_positionBox");
-            this._positionBox.Name = "_positionBox";
-            this._positionBox.ReadOnly = true;
-            this._positionBox.TextChanged += new System.EventHandler(this._positionBox_TextChanged);
+            resources.ApplyResources(this._yPositionBox, "_yPositionBox");
+            this._yPositionBox.Name = "_yPositionBox";
+            this._yPositionBox.ReadOnly = true;
+            this._yPositionBox.TextChanged += new System.EventHandler(this._positionBox_TextChanged);
             // 
             // _timer
             // 
@@ -160,8 +160,8 @@
         private System.Windows.Forms.ToolTip _toolTip;
         private System.Windows.Forms.Button _StopButton;
         private System.Windows.Forms.Timer _timer;
-        private System.Windows.Forms.TextBox _positionBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox _yPositionBox;
+        private System.Windows.Forms.TextBox _xPositionBox;
     }
 }
 

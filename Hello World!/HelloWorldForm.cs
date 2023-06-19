@@ -240,12 +240,12 @@ namespace Triamec.Tam.Samples {
 
             // Start Demo move
             try {
-                while(true) {
-                    var yRequest = _yAxis.MoveAbsolute(yStartPosition);
-                    var xRequest = _xAxis.MoveAbsolute(xStartPosition);
-                    await yRequest.WaitForSuccessAsync(moveTimeout);
-                    await xRequest.WaitForSuccessAsync(moveTimeout);
-                    await Task.Delay(sleepTime);
+                var yRequest = _yAxis.MoveAbsolute(yStartPosition);
+                var xRequest = _xAxis.MoveAbsolute(xStartPosition);
+                await yRequest.WaitForSuccessAsync(moveTimeout);
+                await xRequest.WaitForSuccessAsync(moveTimeout);
+                await Task.Delay(sleepTime);
+                while (true) {
                     yRequest = _yAxis.MoveAbsolute(yMin);
                     xRequest = _xAxis.MoveAbsolute(xMax);
                     await yRequest.WaitForSuccessAsync(moveTimeout);
@@ -268,19 +268,32 @@ namespace Triamec.Tam.Samples {
             } 
             catch(AxisCommandRejectedException) {
                 //do nothing
+            } 
+            catch (CommandRejectedException) {
+                //do nothing
             }
 
 
         }
 
         /// <summary>
-        /// Measures the axis position and shows it in the GUI.
+        /// Measures the axis Y position and shows it in the GUI.
         /// </summary>
-        void yReadPosition() {
+        void YreadPosition() {
             var register = (Axis)_yAxis.Register;
             var positionRegister = register.Signals.PositionController.MasterPosition;
             var position = positionRegister.Read();
-            _positionBox.Text = $"{position:F2} {_yUnit}";
+            _yPositionBox.Text = $"{position:F2} {_yUnit}";
+        }
+
+        /// <summary>
+        /// Measures the axis X position and shows it in the GUI.
+        /// </summary>
+        void XreadPosition() {
+            var register = (Axis)_xAxis.Register;
+            var positionRegister = register.Signals.PositionController.MasterPosition;
+            var position = positionRegister.Read();
+            _xPositionBox.Text = $"{position:F2} {_xUnit}";
         }
         #endregion Hello world code
 
@@ -356,8 +369,10 @@ namespace Triamec.Tam.Samples {
             try {
                 _StopButton.Enabled = false;
                 _StartButton.Enabled = true;
-                _yAxis.Stop();
-                _xAxis.Stop();
+                var yRequest = _yAxis.Stop();
+                var xRequest = _xAxis.Stop();
+                yRequest.WaitForSuccess(moveTimeout);
+                xRequest.WaitForSuccess(moveTimeout);
                 DisableDrive();
             } 
             catch (TamException ex) {
@@ -373,7 +388,10 @@ namespace Triamec.Tam.Samples {
         #endregion Menu handler methods
 
         #region Timer methods
-        void OnTimerTick(object sender, EventArgs e) => yReadPosition();
+        void OnTimerTick(object sender, EventArgs e) {
+            YreadPosition();
+            XreadPosition();
+        }
 
         #endregion Timer methods
 
