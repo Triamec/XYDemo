@@ -209,8 +209,8 @@
               <RegisterComponent Address="Axes[0]/Parameters/Motor/TemperatureUpperLimit" Type="Single" Value="70" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/ModuloPositionMaximum" Type="Double" Value="0" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/ModuloPositionMinimum" Type="Double" Value="0" />
-              <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/PositionMaximum" Type="Single" Value="0" />
-              <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/PositionMinimum" Type="Single" Value="0" />
+              <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/PositionMaximum" Type="Single" Value="80" />
+              <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/PositionMinimum" Type="Single" Value="-80" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/VelocityMaximum" Type="Single" Value="420" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/AccelerationMaximum" Type="Single" Value="5000" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/DecelerationMaximum" Type="Single" Value="5000" />
@@ -885,29 +885,6 @@
               <RegisterComponent Address="Application/Parameters/Booleans[7]" Type="Boolean" Value="False" />
             </Children>
           </Registers>
-          <TamModule Name="Axis Group" ParentProperty="Module" TamModuleType="Triamec.Tam.Modules.AxisGroup, ModuleCatalog, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <Children>
-              <ModuleComponent Name="Y" ParentProperty="Axis1">
-                <Children>
-                  <ModuleComponent Name="Bode Tuning" ParentProperty="BodeTuning">
-                    <Children />
-                    <Parameters />
-                  </ModuleComponent>
-                </Children>
-                <Parameters />
-              </ModuleComponent>
-              <ModuleComponent Name="Axis 1" ParentProperty="Axis2">
-                <Children>
-                  <ModuleComponent Name="Bode Tuning" ParentProperty="BodeTuning">
-                    <Children />
-                    <Parameters />
-                  </ModuleComponent>
-                </Children>
-                <Parameters />
-              </ModuleComponent>
-            </Children>
-            <Parameters />
-          </TamModule>
         </TamDevice>
       </Children>
     </TamStation>
@@ -1117,8 +1094,8 @@
               <RegisterComponent Address="Axes[0]/Parameters/Motor/TemperatureUpperLimit" Type="Single" Value="70" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/ModuloPositionMaximum" Type="Double" Value="0" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/ModuloPositionMinimum" Type="Double" Value="0" />
-              <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/PositionMaximum" Type="Single" Value="0" />
-              <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/PositionMinimum" Type="Single" Value="0" />
+              <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/PositionMaximum" Type="Single" Value="150" />
+              <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/PositionMinimum" Type="Single" Value="-150" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/VelocityMaximum" Type="Single" Value="500" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/AccelerationMaximum" Type="Single" Value="3000" />
               <RegisterComponent Address="Axes[0]/Parameters/PathPlanner/DecelerationMaximum" Type="Single" Value="3000" />
@@ -1795,29 +1772,6 @@
               <RegisterComponent Address="Application/Parameters/Booleans[7]" Type="Boolean" Value="False" />
             </Children>
           </Registers>
-          <TamModule Name="Axis Group" ParentProperty="Module" TamModuleType="Triamec.Tam.Modules.AxisGroup, ModuleCatalog, Version=7.0.0.0, Culture=neutral, PublicKeyToken=null">
-            <Children>
-              <ModuleComponent Name="Xtrans" ParentProperty="Axis1">
-                <Children>
-                  <ModuleComponent Name="Bode Tuning" ParentProperty="BodeTuning">
-                    <Children />
-                    <Parameters />
-                  </ModuleComponent>
-                </Children>
-                <Parameters />
-              </ModuleComponent>
-              <ModuleComponent Name="Y2" ParentProperty="Axis2">
-                <Children>
-                  <ModuleComponent Name="Bode Tuning" ParentProperty="BodeTuning">
-                    <Children />
-                    <Parameters />
-                  </ModuleComponent>
-                </Children>
-                <Parameters />
-              </ModuleComponent>
-            </Children>
-            <Parameters />
-          </TamModule>
         </TamDevice>
       </Children>
     </TamStation>

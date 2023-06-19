@@ -44,17 +44,20 @@ namespace Triamec.Tam.Samples {
         // The unit of this constant depends on the PositionUnit parameter provided with the TAM configuration.
         // Additionally, the encoder must be correctly configured.
         // Consider any limit stops.
-        static readonly double yMin = Settings.Default.yMin;
-        static readonly double yMax = Settings.Default.yMax;
-        static readonly double xMin = Settings.Default.xMin;
-        static readonly double xMax = Settings.Default.xMax;
+        //static readonly double yMin = Settings.Default.yMin;
+        //static readonly double yMax = Settings.Default.yMax;
+        //static readonly double xMin = Settings.Default.xMin;
+        //static readonly double xMax = Settings.Default.xMax;
+        double yMin, yMax, xMin, xMax;
+        double yStartPosition, xStartPosition;
+        double xStepLength;
         static readonly int xNumberOfSteps = Settings.Default.xNumberOfSteps;
         static readonly int sleepTime = Settings.Default.sleepTime;
         TimeSpan moveTimeout = new TimeSpan(0,0,10);
         TimeSpan enableTimeout = new TimeSpan(0, 0, 10);
-        static readonly double yStartPosition = yMax;
-        static readonly double xStartPosition = xMin;
-        static readonly double xStepLength = (xMax - xMin)/xNumberOfSteps;
+        //static readonly double yStartPosition = yMax;
+        //static readonly double xStartPosition = xMin;
+        //static readonly double xStepLength = (xMax - xMin)/xNumberOfSteps;
 
 
         TamTopology _topology;
@@ -121,6 +124,17 @@ namespace Triamec.Tam.Samples {
             // Cache the position unit.
             _yUnit = yRegister.Parameters.PositionController.PositionUnit.Read().ToString();
             _xUnit = xRegister.Parameters.PositionController.PositionUnit.Read().ToString();
+
+            // Cache Position Min and Max
+            yMin = yRegister.Parameters.PathPlanner.PositionMinimum.Read();
+            yMax = yRegister.Parameters.PathPlanner.PositionMaximum.Read(); 
+            xMin = xRegister.Parameters.PathPlanner.PositionMinimum.Read();
+            xMax = xRegister.Parameters.PathPlanner.PositionMaximum.Read();
+
+            // Assign values based on Position Min and Max
+            yStartPosition = yMax;
+            xStartPosition = xMin;
+            xStepLength = (xMax - xMin) / xNumberOfSteps;
 
             // Start displaying the position in regular intervals.
             _timer.Start();
