@@ -256,6 +256,8 @@ namespace Triamec.Tam.Samples {
             if (_yAxis != null) {
                 try {
                     DisableDrive();
+                    _yAxis.Drive.RemoveStateObserver(this);
+                    _xAxis.Drive.RemoveStateObserver(this);
                 } catch (TamException ex) {
                     MessageBox.Show(this, ex.Message, Resources.StartupErrorCaption, MessageBoxButtons.OK,
                         MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0);
