@@ -15,7 +15,7 @@ using Axis = Triamec.Tam.Rlid19.Axis;
 
 namespace Triamec.Tam.Samples {
     /// <summary>
-    /// The main form of the TAM "Hello World!" application.
+    /// The main form of the TAM "XY Demo" application.
     /// </summary>
     internal partial class XYDemo : Form {
         #region Constructor
