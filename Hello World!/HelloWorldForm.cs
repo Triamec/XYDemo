@@ -285,13 +285,13 @@ namespace Triamec.Tam.Samples {
 
             // Note: a more elaborated application would change button states depending on what's the drive reporting,
             // following the MVC concept.
-            _moveNegativeButton.Enabled = true;
-            _movePositiveButton.Enabled = true;
+            _StartButton.Enabled = true;
+            _StopButton.Enabled = true;
         }
 
         void OnDisableButtonClick(object sender, EventArgs e) {
-            _moveNegativeButton.Enabled = false;
-            _movePositiveButton.Enabled = false;
+            _StartButton.Enabled = false;
+            _StopButton.Enabled = false;
             try {
                 DisableDrive();
             } catch (TamException ex) {
@@ -300,7 +300,7 @@ namespace Triamec.Tam.Samples {
             }
         }
 
-        void OnMoveNegativeButtonClick(object sender, EventArgs e) {
+        void OnStopButtonClick(object sender, EventArgs e) {
             try {
                 MoveAxis(-1);
             } catch (TamException ex) {
@@ -309,7 +309,7 @@ namespace Triamec.Tam.Samples {
             }
         }
 
-        void OnMovePositiveButtonClick(object sender, EventArgs e) {
+        void OnStartButtonClick(object sender, EventArgs e) {
             try {
                 MoveAxis(1);
             } catch (TamException ex) {

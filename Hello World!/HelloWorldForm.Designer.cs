@@ -37,12 +37,12 @@
             System.Windows.Forms.Label label4;
             System.Windows.Forms.GroupBox measurementGroupBox;
             this._velocitySlider = new System.Windows.Forms.TrackBar();
-            this._moveNegativeButton = new System.Windows.Forms.Button();
-            this._movePositiveButton = new System.Windows.Forms.Button();
+            this._StartButton = new System.Windows.Forms.Button();
+            this._StopButton = new System.Windows.Forms.Button();
+            this._positionBox = new System.Windows.Forms.TextBox();
             this._toolTip = new System.Windows.Forms.ToolTip(this.components);
             this._driveGroupBox = new System.Windows.Forms.GroupBox();
             this._timer = new System.Windows.Forms.Timer(this.components);
-            this._positionBox = new System.Windows.Forms.TextBox();
             enableButton = new System.Windows.Forms.Button();
             disableButton = new System.Windows.Forms.Button();
             menuStrip = new System.Windows.Forms.MenuStrip();
@@ -57,8 +57,8 @@
             menuStrip.SuspendLayout();
             motionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._velocitySlider)).BeginInit();
-            this._driveGroupBox.SuspendLayout();
             measurementGroupBox.SuspendLayout();
+            this._driveGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // enableButton
@@ -104,8 +104,8 @@
             motionGroupBox.Controls.Add(label2);
             motionGroupBox.Controls.Add(label1);
             motionGroupBox.Controls.Add(this._velocitySlider);
-            motionGroupBox.Controls.Add(this._moveNegativeButton);
-            motionGroupBox.Controls.Add(this._movePositiveButton);
+            motionGroupBox.Controls.Add(this._StartButton);
+            motionGroupBox.Controls.Add(this._StopButton);
             resources.ApplyResources(motionGroupBox, "motionGroupBox");
             motionGroupBox.Name = "motionGroupBox";
             motionGroupBox.TabStop = false;
@@ -136,21 +136,40 @@
             this._toolTip.SetToolTip(this._velocitySlider, resources.GetString("_velocitySlider.ToolTip"));
             this._velocitySlider.Value = 100;
             // 
-            // _moveNegativeButton
+            // _StartButton
             // 
-            resources.ApplyResources(this._moveNegativeButton, "_moveNegativeButton");
-            this._moveNegativeButton.Name = "_moveNegativeButton";
-            this._toolTip.SetToolTip(this._moveNegativeButton, resources.GetString("_moveNegativeButton.ToolTip"));
-            this._moveNegativeButton.UseVisualStyleBackColor = true;
-            this._moveNegativeButton.Click += new System.EventHandler(this.OnMoveNegativeButtonClick);
+            resources.ApplyResources(this._StartButton, "_StartButton");
+            this._StartButton.Name = "_StartButton";
+            this._toolTip.SetToolTip(this._StartButton, resources.GetString("_StartButton.ToolTip"));
+            this._StartButton.UseVisualStyleBackColor = true;
+            this._StartButton.Click += new System.EventHandler(this.OnStopButtonClick);
             // 
-            // _movePositiveButton
+            // _StopButton
             // 
-            resources.ApplyResources(this._movePositiveButton, "_movePositiveButton");
-            this._movePositiveButton.Name = "_movePositiveButton";
-            this._toolTip.SetToolTip(this._movePositiveButton, resources.GetString("_movePositiveButton.ToolTip"));
-            this._movePositiveButton.UseVisualStyleBackColor = true;
-            this._movePositiveButton.Click += new System.EventHandler(this.OnMovePositiveButtonClick);
+            resources.ApplyResources(this._StopButton, "_StopButton");
+            this._StopButton.Name = "_StopButton";
+            this._toolTip.SetToolTip(this._StopButton, resources.GetString("_StopButton.ToolTip"));
+            this._StopButton.UseVisualStyleBackColor = true;
+            this._StopButton.Click += new System.EventHandler(this.OnStartButtonClick);
+            // 
+            // label4
+            // 
+            resources.ApplyResources(label4, "label4");
+            label4.Name = "label4";
+            // 
+            // measurementGroupBox
+            // 
+            measurementGroupBox.Controls.Add(this._positionBox);
+            measurementGroupBox.Controls.Add(label4);
+            resources.ApplyResources(measurementGroupBox, "measurementGroupBox");
+            measurementGroupBox.Name = "measurementGroupBox";
+            measurementGroupBox.TabStop = false;
+            // 
+            // _positionBox
+            // 
+            resources.ApplyResources(this._positionBox, "_positionBox");
+            this._positionBox.Name = "_positionBox";
+            this._positionBox.ReadOnly = true;
             // 
             // _driveGroupBox
             // 
@@ -163,25 +182,6 @@
             // _timer
             // 
             this._timer.Tick += new System.EventHandler(this.OnTimerTick);
-            // 
-            // label4
-            // 
-            resources.ApplyResources(label4, "label4");
-            label4.Name = "label4";
-            // 
-            // _positionBox
-            // 
-            resources.ApplyResources(this._positionBox, "_positionBox");
-            this._positionBox.Name = "_positionBox";
-            this._positionBox.ReadOnly = true;
-            // 
-            // measurementGroupBox
-            // 
-            measurementGroupBox.Controls.Add(this._positionBox);
-            measurementGroupBox.Controls.Add(label4);
-            resources.ApplyResources(measurementGroupBox, "measurementGroupBox");
-            measurementGroupBox.Name = "measurementGroupBox";
-            measurementGroupBox.TabStop = false;
             // 
             // HelloWorldForm
             // 
@@ -198,9 +198,9 @@
             motionGroupBox.ResumeLayout(false);
             motionGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._velocitySlider)).EndInit();
-            this._driveGroupBox.ResumeLayout(false);
             measurementGroupBox.ResumeLayout(false);
             measurementGroupBox.PerformLayout();
+            this._driveGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,9 +208,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Button _moveNegativeButton;
+        private System.Windows.Forms.Button _StartButton;
         private System.Windows.Forms.ToolTip _toolTip;
-        private System.Windows.Forms.Button _movePositiveButton;
+        private System.Windows.Forms.Button _StopButton;
         private System.Windows.Forms.GroupBox _driveGroupBox;
         private System.Windows.Forms.TrackBar _velocitySlider;
         private System.Windows.Forms.Timer _timer;

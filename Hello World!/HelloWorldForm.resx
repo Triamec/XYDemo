@@ -360,70 +360,70 @@
   <data name="&gt;&gt;_velocitySlider.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="_moveNegativeButton.Enabled" type="System.Boolean, mscorlib">
+  <data name="_StartButton.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="_moveNegativeButton.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="_StartButton.Font" type="System.Drawing.Font, System.Drawing">
     <value>Verdana, 14.25pt, style=Bold, Italic</value>
   </data>
-  <data name="_moveNegativeButton.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_StartButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 19</value>
   </data>
-  <data name="_moveNegativeButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_StartButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 50</value>
   </data>
-  <data name="_moveNegativeButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="_StartButton.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="_moveNegativeButton.Text" xml:space="preserve">
+  <data name="_StartButton.Text" xml:space="preserve">
     <value>&amp;Start</value>
   </data>
-  <data name="_moveNegativeButton.ToolTip" xml:space="preserve">
+  <data name="_StartButton.ToolTip" xml:space="preserve">
     <value>Moves the motor by -Pi/2.</value>
   </data>
-  <data name="&gt;&gt;_moveNegativeButton.Name" xml:space="preserve">
-    <value>_moveNegativeButton</value>
+  <data name="&gt;&gt;_StartButton.Name" xml:space="preserve">
+    <value>_StartButton</value>
   </data>
-  <data name="&gt;&gt;_moveNegativeButton.Type" xml:space="preserve">
+  <data name="&gt;&gt;_StartButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_moveNegativeButton.Parent" xml:space="preserve">
+  <data name="&gt;&gt;_StartButton.Parent" xml:space="preserve">
     <value>motionGroupBox</value>
   </data>
-  <data name="&gt;&gt;_moveNegativeButton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_StartButton.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="_movePositiveButton.Enabled" type="System.Boolean, mscorlib">
+  <data name="_StopButton.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="_movePositiveButton.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="_StopButton.Font" type="System.Drawing.Font, System.Drawing">
     <value>Verdana, 14.25pt, style=Bold, Italic</value>
   </data>
-  <data name="_movePositiveButton.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="_StopButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>139, 19</value>
   </data>
-  <data name="_movePositiveButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="_StopButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 50</value>
   </data>
-  <data name="_movePositiveButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="_StopButton.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="_movePositiveButton.Text" xml:space="preserve">
+  <data name="_StopButton.Text" xml:space="preserve">
     <value>&amp;Stop</value>
   </data>
-  <data name="_movePositiveButton.ToolTip" xml:space="preserve">
+  <data name="_StopButton.ToolTip" xml:space="preserve">
     <value>Moves the motor by +Pi/2.</value>
   </data>
-  <data name="&gt;&gt;_movePositiveButton.Name" xml:space="preserve">
-    <value>_movePositiveButton</value>
+  <data name="&gt;&gt;_StopButton.Name" xml:space="preserve">
+    <value>_StopButton</value>
   </data>
-  <data name="&gt;&gt;_movePositiveButton.Type" xml:space="preserve">
+  <data name="&gt;&gt;_StopButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_movePositiveButton.Parent" xml:space="preserve">
+  <data name="&gt;&gt;_StopButton.Parent" xml:space="preserve">
     <value>motionGroupBox</value>
   </data>
-  <data name="&gt;&gt;_movePositiveButton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;_StopButton.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
   <data name="motionGroupBox.Location" type="System.Drawing.Point, System.Drawing">
@@ -450,36 +450,6 @@
   <data name="&gt;&gt;motionGroupBox.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="_driveGroupBox.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="_driveGroupBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 28</value>
-  </data>
-  <data name="_driveGroupBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>268, 81</value>
-  </data>
-  <data name="_driveGroupBox.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="_driveGroupBox.Text" xml:space="preserve">
-    <value>Drive</value>
-  </data>
-  <data name="&gt;&gt;_driveGroupBox.Name" xml:space="preserve">
-    <value>_driveGroupBox</value>
-  </data>
-  <data name="&gt;&gt;_driveGroupBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_driveGroupBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;_driveGroupBox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <metadata name="_timer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>220, 17</value>
-  </metadata>
   <metadata name="label4.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
@@ -513,6 +483,9 @@
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <metadata name="measurementGroupBox.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
   <data name="_positionBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -540,9 +513,6 @@
   <data name="&gt;&gt;_positionBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="measurementGroupBox.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>False</value>
-  </metadata>
   <data name="measurementGroupBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 261</value>
   </data>
@@ -567,6 +537,36 @@
   <data name="&gt;&gt;measurementGroupBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="_driveGroupBox.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="_driveGroupBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 28</value>
+  </data>
+  <data name="_driveGroupBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 81</value>
+  </data>
+  <data name="_driveGroupBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="_driveGroupBox.Text" xml:space="preserve">
+    <value>Drive</value>
+  </data>
+  <data name="&gt;&gt;_driveGroupBox.Name" xml:space="preserve">
+    <value>_driveGroupBox</value>
+  </data>
+  <data name="&gt;&gt;_driveGroupBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_driveGroupBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;_driveGroupBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <metadata name="_timer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>220, 17</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
