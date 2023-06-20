@@ -4,15 +4,12 @@
 
 Move a stage in X and Y direction according to the graph below.
 
-![TAM XY Demo](./doc/XY-Demo.png)
-
-<img src = "./doc/Screenshot.png" width = "40%">
+![TAM XY Demo](./doc/Serpentine.png)
 
 ## Hardware Prerequisites
 
 - Two *Triamec* drives with a motor and encoder connected and configured with a stable position controller
-- Connection to the drives by *Tria-Link* via Tria-Link PCI adapter (TL100 or TLC201)
-
+- Connection to the drives by *Tria-Link* via PCI adapter card *TL*.
 
 ## Software Prerequisites
 
@@ -23,16 +20,16 @@ In addition you need [TAM Software](https://www.triamec.com/en/tam-software-supp
 ## Prepare Application
 
 1. Open file `Properties > Settings.settings` (if used in a IDE) or `XY Demo.exe.config` (if used as an executable) and configure the parameters to your needs.
-- `xNumberOfSteps` number of steps in X direction according to the graph above
-- `sleepTime` time (in milliseconds) in stillstand after move  before the next move is executed
-- `yAxisName` name of the axis that behaves as the Y axis according to the graph above
-- `xAxisName` name of the axis that behaves as the X axis according to the graph above
 
-2. Replace the `XYDemo.TAMcfg` configuration file with one matching your setup. To generate such a file, use the TAM System Explorer Software and go to `File > Save TAM Configuration...`. The TAM System Explorer can also help you find the `x/yAxisName` for the settings.
+- `xNumberOfSteps`: Number of steps in X direction according to the graph above.
+- `sleepTime`: Dwell time (in milliseconds) in between moves.
+- `yAxisName`: Name of the axis that behaves as the Y axis according to the graph above.
+- `xAxisName`: Name of the axis that behaves as the X axis according to the graph above.
 
-3. Build/start the `XY Demo.sln` (if used in an IDE) or the `XY Demo.exe` (if used as an executable)
+1. Build/start the `XY Demo.sln` (if used in an IDE) or the `XY Demo.exe` (if used as an executable)
 
 ## Operate Application
 
-Simply use the Start and Stop buttons. The Start of the sequence might takes some seconds, as the axes are enabled and start commutation according to your configuration.
+Simply use the **Start** and **Stop** buttons. The Start of the sequence might takes some seconds, as the axes are enabled and start commutation according to your configuration.
 
+![TAM XY Demo](./doc/Screenshot.png)
