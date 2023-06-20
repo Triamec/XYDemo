@@ -49,7 +49,7 @@ namespace Triamec.Tam.Samples {
         //static readonly double xMin = Settings.Default.xMin;
         //static readonly double xMax = Settings.Default.xMax;
         double yMin, yMax, xMin, xMax;
-        double yStartPosition, xStartPosition;
+        double yStartPosition, yEndPosition, xStartPosition, xEndPosition;
         double xStepLength;
         static readonly int xNumberOfSteps = Settings.Default.xNumberOfSteps;
         static readonly int sleepTime = Settings.Default.sleepTime;
@@ -132,9 +132,13 @@ namespace Triamec.Tam.Samples {
             xMax = xRegister.Parameters.PathPlanner.PositionMaximum.Read();
 
             // Assign values based on Position Min and Max
-            yStartPosition = yMax;
-            xStartPosition = xMin;
-            xStepLength = (xMax - xMin) / xNumberOfSteps;
+            double xStroke = xMax - xMin;
+            double yStroke = yMax - yMin;
+            yStartPosition = yMax - yStroke * 0.01;
+            yEndPosition = yMin + yStroke * 0.01;
+            xStartPosition = xMin + xStroke * 0.01;
+            xEndPosition = xMax - xStroke * 0.01;
+            xStepLength = xStroke*0.98 / xNumberOfSteps;
 
             // Start displaying the position in regular intervals.
             _timer.Start();
@@ -199,8 +203,8 @@ namespace Triamec.Tam.Samples {
                 await Task.Delay(sleepTime);
                 // Loop move until stopped
                 while (true) {
-                    yRequest = _yAxis.MoveAbsolute(yMin);
-                    xRequest = _xAxis.MoveAbsolute(xMax);
+                    yRequest = _yAxis.MoveAbsolute(yEndPosition);
+                    xRequest = _xAxis.MoveAbsolute(xEndPosition);
                     await yRequest.WaitForSuccessAsync(moveTimeout);
                     await xRequest.WaitForSuccessAsync(moveTimeout);
                     await Task.Delay(sleepTime);
@@ -208,8 +212,8 @@ namespace Triamec.Tam.Samples {
                         _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
                         await Task.Delay(sleepTime);
                     }
-                    yRequest = _yAxis.MoveAbsolute(yMax);
-                    xRequest = _xAxis.MoveAbsolute(xMax);
+                    yRequest = _yAxis.MoveAbsolute(yStartPosition);
+                    xRequest = _xAxis.MoveAbsolute(xStartPosition);
                     await yRequest.WaitForSuccessAsync(moveTimeout);
                     await xRequest.WaitForSuccessAsync(moveTimeout);
                     await Task.Delay(sleepTime);
