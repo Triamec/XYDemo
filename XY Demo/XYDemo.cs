@@ -49,7 +49,7 @@ namespace Triamec.Tam.Samples {
         //static readonly double xMin = Settings.Default.xMin;
         //static readonly double xMax = Settings.Default.xMax;
         double yMin, yMax, xMin, xMax;
-        double yStartPosition, yEndPosition, xStartPosition, xEndPosition;
+        double yMaxReduced, yMinReduced, xMinReduced, xMaxReduced;
         double xStepLength;
         static readonly int xNumberOfSteps = Settings.Default.xNumberOfSteps;
         static readonly int sleepTime = Settings.Default.sleepTime;
@@ -134,11 +134,11 @@ namespace Triamec.Tam.Samples {
             // Assign values based on Position Min and Max
             double xStroke = xMax - xMin;
             double yStroke = yMax - yMin;
-            yStartPosition = yMax - yStroke * 0.01;
-            yEndPosition = yMin + yStroke * 0.01;
-            xStartPosition = xMin + xStroke * 0.01;
-            xEndPosition = xMax - xStroke * 0.01;
-            xStepLength = Math.Abs(xEndPosition-xStartPosition) / xNumberOfSteps;
+            yMaxReduced = yMax - yStroke * 0.01;
+            yMinReduced = yMin + yStroke * 0.01;
+            xMinReduced = xMin + xStroke * 0.01;
+            xMaxReduced = xMax - xStroke * 0.01;
+            xStepLength = Math.Abs(xMaxReduced-xMinReduced) / xNumberOfSteps;
 
             // Start displaying the position in regular intervals.
             _timer.Start();
@@ -196,15 +196,15 @@ namespace Triamec.Tam.Samples {
             // Start Demo move
             try {
                 // Go to start position
-                var yRequest = _yAxis.MoveAbsolute(yStartPosition);
-                var xRequest = _xAxis.MoveAbsolute(xStartPosition);
+                var yRequest = _yAxis.MoveAbsolute(yMaxReduced);
+                var xRequest = _xAxis.MoveAbsolute(xMinReduced);
                 await yRequest.WaitForSuccessAsync(moveTimeout);
                 await xRequest.WaitForSuccessAsync(moveTimeout);
                 await Task.Delay(sleepTime);
                 // Loop move until stopped
                 while (true) {
-                    yRequest = _yAxis.MoveAbsolute(yEndPosition);
-                    xRequest = _xAxis.MoveAbsolute(xEndPosition);
+                    yRequest = _yAxis.MoveAbsolute(yMinReduced);
+                    xRequest = _xAxis.MoveAbsolute(xMaxReduced);
                     await yRequest.WaitForSuccessAsync(moveTimeout);
                     await xRequest.WaitForSuccessAsync(moveTimeout);
                     await Task.Delay(sleepTime);
@@ -212,8 +212,8 @@ namespace Triamec.Tam.Samples {
                         _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
                         await Task.Delay(sleepTime);
                     }
-                    yRequest = _yAxis.MoveAbsolute(yStartPosition);
-                    xRequest = _xAxis.MoveAbsolute(xStartPosition);
+                    yRequest = _yAxis.MoveAbsolute(yMaxReduced);
+                    xRequest = _xAxis.MoveAbsolute(xMaxReduced);
                     await yRequest.WaitForSuccessAsync(moveTimeout);
                     await xRequest.WaitForSuccessAsync(moveTimeout);
                     await Task.Delay(sleepTime);
