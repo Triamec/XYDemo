@@ -6,7 +6,7 @@ Move a stage in X and Y direction according to the graph below.
 
 ![TAM XY Demo](./doc/XY-Demo.png)
 
-![TAM XY Demo](./doc/Screenshot.png)
+<img src = "./doc/Screenshot.png" width = "45%">
 
 ## Hardware Prerequisites
 
