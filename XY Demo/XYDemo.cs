@@ -138,7 +138,7 @@ namespace Triamec.Tam.Samples {
             yEndPosition = yMin + yStroke * 0.01;
             xStartPosition = xMin + xStroke * 0.01;
             xEndPosition = xMax - xStroke * 0.01;
-            xStepLength = xStroke*0.98 / xNumberOfSteps;
+            xStepLength = Math.Abs(xEndPosition-xStartPosition) / xNumberOfSteps;
 
             // Start displaying the position in regular intervals.
             _timer.Start();
