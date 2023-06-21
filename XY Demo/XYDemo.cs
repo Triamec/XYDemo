@@ -252,6 +252,45 @@ namespace Triamec.Tam.Samples {
             var position = positionRegister.Read();
             _xPositionBox.Text = $"{position:F2} {_xUnit}";
         }
+
+        async Task pollDigIn1() {
+            var yRegister = (Axis)_yAxis.Register;
+            bool inputStart = yRegister.Signals.General.DigitalInputBits.DigIn4.Read();
+            bool inputStop = yRegister.Signals.General.DigitalInputBits.DigIn5.Read();
+            if (inputStart && _StartButton.Enabled) {
+                OnStart();
+            }
+            if (inputStop && _StopButton.Enabled) {
+                OnStop();
+            }
+        }
+
+        async Task OnStart() {
+            try {
+                _StopButton.Enabled = true;
+                _StartButton.Enabled = false;
+                await MoveAxis();
+            } catch (TamException ex) {
+                MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
+                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
+            }
+        }
+
+        async Task OnStop() {
+            try {
+                _StopButton.Enabled = false;
+                _StartButton.Enabled = true;
+                var yRequest = _yAxis.Stop();
+                var xRequest = _xAxis.Stop();
+                yRequest.WaitForSuccess(moveTimeout);
+                xRequest.WaitForSuccess(moveTimeout);
+                DisableDrive();
+            } catch (TamException ex) {
+                MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
+                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
+            }
+        }
+
         #endregion Hello world code
 
         #region GUI handler methods
@@ -287,30 +326,11 @@ namespace Triamec.Tam.Samples {
         #region Button handler methods
 
         async void OnStartButtonClick(object sender, EventArgs e) {
-            try {
-                _StopButton.Enabled = true;
-                _StartButton.Enabled = false;
-                await MoveAxis();
-            } catch (TamException ex) {
-                MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
-                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
-            }
+            await OnStart();
         }
 
-        void OnStopButtonClick(object sender, EventArgs e) {
-            try {
-                _StopButton.Enabled = false;
-                _StartButton.Enabled = true;
-                var yRequest = _yAxis.Stop();
-                var xRequest = _xAxis.Stop();
-                yRequest.WaitForSuccess(moveTimeout);
-                xRequest.WaitForSuccess(moveTimeout);
-                DisableDrive();
-            } 
-            catch (TamException ex) {
-                MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
-                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
-            }
+        async void OnStopButtonClick(object sender, EventArgs e) {
+            await OnStop();
         }
         #endregion Button handler methods
 
@@ -323,6 +343,7 @@ namespace Triamec.Tam.Samples {
         void OnTimerTick(object sender, EventArgs e) {
             YreadPosition();
             XreadPosition();
+            pollDigIn1();
         }
 
         #endregion Timer methods
