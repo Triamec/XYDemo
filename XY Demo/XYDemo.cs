@@ -203,23 +203,28 @@ namespace Triamec.Tam.Samples {
                 await Task.Delay(sleepTime);
                 // Loop move until stopped
                 while (true) {
-                    yRequest = _yAxis.MoveAbsolute(yMinReduced);
-                    xRequest = _xAxis.MoveAbsolute(xMaxReduced);
-                    await yRequest.WaitForSuccessAsync(moveTimeout);
-                    await xRequest.WaitForSuccessAsync(moveTimeout);
-                    await Task.Delay(sleepTime);
                     for (int i = 0; i < xNumberOfSteps; i++) {
-                        _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
+                        _xAxis.MoveRelative(xStepLength).WaitForSuccess(moveTimeout);
                         await Task.Delay(sleepTime);
+                        if (i % 2 == 0) {
+                            _yAxis.MoveAbsolute(yMinReduced).WaitForSuccess(moveTimeout);
+                            await Task.Delay(sleepTime);
+                        } 
+                        else {
+                            _yAxis.MoveAbsolute(yMaxReduced).WaitForSuccess(moveTimeout);
+                            await Task.Delay(sleepTime);
+                        }
                     }
-                    yRequest = _yAxis.MoveAbsolute(yMaxReduced);
-                    xRequest = _xAxis.MoveAbsolute(xMaxReduced);
-                    await yRequest.WaitForSuccessAsync(moveTimeout);
-                    await xRequest.WaitForSuccessAsync(moveTimeout);
-                    await Task.Delay(sleepTime);
                     for (int i = 0; i < xNumberOfSteps; i++) {
                         _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
                         await Task.Delay(sleepTime);
+                        if (i % 2 == 0) {
+                            _yAxis.MoveAbsolute(yMinReduced).WaitForSuccess(moveTimeout);
+                            await Task.Delay(sleepTime);
+                        } else {
+                            _yAxis.MoveAbsolute(yMaxReduced).WaitForSuccess(moveTimeout);
+                            await Task.Delay(sleepTime);
+                        }
                     }
                 }
             } 
