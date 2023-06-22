@@ -219,10 +219,10 @@ namespace Triamec.Tam.Samples {
                         _xAxis.MoveRelative(-xStepLength).WaitForSuccess(moveTimeout);
                         await Task.Delay(sleepTime);
                         if (i % 2 == 0) {
-                            _yAxis.MoveAbsolute(yMinReduced).WaitForSuccess(moveTimeout);
+                            _yAxis.MoveAbsolute(yMaxReduced).WaitForSuccess(moveTimeout);
                             await Task.Delay(sleepTime);
                         } else {
-                            _yAxis.MoveAbsolute(yMaxReduced).WaitForSuccess(moveTimeout);
+                            _yAxis.MoveAbsolute(yMinReduced).WaitForSuccess(moveTimeout);
                             await Task.Delay(sleepTime);
                         }
                     }
