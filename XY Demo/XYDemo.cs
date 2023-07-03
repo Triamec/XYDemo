@@ -162,11 +162,11 @@ namespace Triamec.Tam.Samples {
         /// </summary>
         /// <param name="sign">A positive or negative value indicating the direction of the motion.</param>
         /// <exception cref="TamException">Moving failed.</exception>
-        async Task MoveAxis() {
-  
-            // Set the drive operational, i.e. switch the power section on.
-            _yAxis.Drive.SwitchOn();
-            _xAxis.Drive.SwitchOn();
+        async Task MoveAxis() {  
+            
+            // Set the drive operational, i.e. switch the power section on.            
+            await _yAxis.Drive.SwitchOn().WaitForSuccessAsync(enableTimeout);
+            await _xAxis.Drive.SwitchOn().WaitForSuccessAsync(enableTimeout);
 
             // Reset any axis error and enable the axis controller.
             await _yAxis.Control(AxisControlCommands.ResetError).WaitForSuccessAsync(enableTimeout);
