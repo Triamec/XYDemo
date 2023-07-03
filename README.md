@@ -4,7 +4,7 @@
 
 Move a stage in X and Y direction according to the graph below.
 
-![TAM XY Demo](./doc/Serpentine.png)
+![TAM XY Demo](./doc/XY-Demo.drawio.txt.drawio.svg)
 
 ## Hardware Prerequisites
 
