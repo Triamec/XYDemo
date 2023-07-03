@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Triamec.Tam.Configuration;
 using Triamec.Tam.Samples.Properties;
 using Triamec.TriaLink;
-using Triamec.TriaLink.Adapter;
 
 // Rlid19 represents the register layout of drives of the current generation. A previous generation drive has layout 4.
 using Axis = Triamec.Tam.Rlid19.Axis;
@@ -144,19 +139,6 @@ namespace Triamec.Tam.Samples {
             _timer.Start();
         }
 
-        /// <summary>
-        /// Creates simulated Tria-Link adapters from a specified configuration.
-        /// </summary>
-        /// <param name="configuration">The configuration.</param>
-        /// <returns>The newly created simulated Tria-Link adapters.</returns>
-        static IEnumerable<IGrouping<Uri, ITriaLinkAdapter>> CreateSimulatedTriaLinkAdapters(
-            TamTopologyConfiguration configuration) =>
-
-            // This call must be in this extra method such that the Tam.Simulation library is only loaded
-            // when simulating. This happens when this method is jitted because the SimulationFactory is the first
-            // symbol during runtime originating from the Tam.Simulation library.
-            SimulationFactory.FromConfiguration(configuration, null);
-
 
         /// <exception cref="TamException">Disabling failed.</exception>
         void DisableDrive() {
@@ -175,11 +157,11 @@ namespace Triamec.Tam.Samples {
         /// </summary>
         /// <param name="sign">A positive or negative value indicating the direction of the motion.</param>
         /// <exception cref="TamException">Moving failed.</exception>
-        async Task MoveAxis() {
-  
-            // Set the drive operational, i.e. switch the power section on.
-            _yAxis.Drive.SwitchOn();
-            _xAxis.Drive.SwitchOn();
+        async Task MoveAxis() {  
+            
+            // Set the drive operational, i.e. switch the power section on.            
+            await _yAxis.Drive.SwitchOn().WaitForSuccessAsync(enableTimeout);
+            await _xAxis.Drive.SwitchOn().WaitForSuccessAsync(enableTimeout);
 
             // Reset any axis error and enable the axis controller.
             await _yAxis.Control(AxisControlCommands.ResetError).WaitForSuccessAsync(enableTimeout);
@@ -258,15 +240,15 @@ namespace Triamec.Tam.Samples {
             _xPositionBox.Text = $"{position:F2} {_xUnit}";
         }
 
-        async Task pollDigIn1() {
+        async Task PollDigIn1() {
             var yRegister = (Axis)_yAxis.Register;
             bool inputStart = yRegister.Signals.General.DigitalInputBits.DigIn4.Read();
             bool inputStop = yRegister.Signals.General.DigitalInputBits.DigIn5.Read();
             if (inputStart && _StartButton.Enabled) {
-                OnStart();
+                await OnStart();
             }
             if (inputStop && _StopButton.Enabled) {
-                OnStop();
+                await OnStop();
             }
         }
 
@@ -284,12 +266,12 @@ namespace Triamec.Tam.Samples {
         async Task OnStop() {
             try {
                 _StopButton.Enabled = false;
-                _StartButton.Enabled = true;
                 var yRequest = _yAxis.Stop();
                 var xRequest = _xAxis.Stop();
-                yRequest.WaitForSuccess(moveTimeout);
-                xRequest.WaitForSuccess(moveTimeout);
+                await yRequest.WaitForSuccessAsync(moveTimeout);
+                await xRequest.WaitForSuccessAsync(moveTimeout);
                 DisableDrive();
+                _StartButton.Enabled = true;
             } catch (TamException ex) {
                 MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
                     MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
@@ -330,13 +312,10 @@ namespace Triamec.Tam.Samples {
 
         #region Button handler methods
 
-        async void OnStartButtonClick(object sender, EventArgs e) {
-            await OnStart();
-        }
+        async void OnStartButtonClick(object sender, EventArgs e) => await OnStart();
 
-        async void OnStopButtonClick(object sender, EventArgs e) {
-            await OnStop();
-        }
+        async void OnStopButtonClick(object sender, EventArgs e) => await OnStop();
+        
         #endregion Button handler methods
 
         #region Menu handler methods
@@ -345,10 +324,10 @@ namespace Triamec.Tam.Samples {
         #endregion Menu handler methods
 
         #region Timer methods
-        void OnTimerTick(object sender, EventArgs e) {
+        async void OnTimerTick(object sender, EventArgs e) {
             YreadPosition();
             XreadPosition();
-            pollDigIn1();
+            await PollDigIn1();
         }
 
         #endregion Timer methods
