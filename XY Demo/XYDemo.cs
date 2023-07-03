@@ -250,10 +250,10 @@ namespace Triamec.Tam.Samples {
             bool inputStart = yRegister.Signals.General.DigitalInputBits.DigIn4.Read();
             bool inputStop = yRegister.Signals.General.DigitalInputBits.DigIn5.Read();
             if (inputStart && _StartButton.Enabled) {
-                OnStart();
+                await OnStart();
             }
             if (inputStop && _StopButton.Enabled) {
-                OnStop();
+                await OnStop();
             }
         }
 
@@ -274,8 +274,8 @@ namespace Triamec.Tam.Samples {
                 _StartButton.Enabled = true;
                 var yRequest = _yAxis.Stop();
                 var xRequest = _xAxis.Stop();
-                yRequest.WaitForSuccess(moveTimeout);
-                xRequest.WaitForSuccess(moveTimeout);
+                await yRequest.WaitForSuccessAsync(moveTimeout);
+                await xRequest.WaitForSuccessAsync(moveTimeout);
                 DisableDrive();
             } catch (TamException ex) {
                 MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
@@ -321,9 +321,8 @@ namespace Triamec.Tam.Samples {
             await OnStart();
         }
 
-        async void OnStopButtonClick(object sender, EventArgs e) {
-            await OnStop();
-        }
+        async void OnStopButtonClick(object sender, EventArgs e) => await OnStop();
+        
         #endregion Button handler methods
 
         #region Menu handler methods
@@ -332,10 +331,10 @@ namespace Triamec.Tam.Samples {
         #endregion Menu handler methods
 
         #region Timer methods
-        void OnTimerTick(object sender, EventArgs e) {
+        async void OnTimerTick(object sender, EventArgs e) {
             YreadPosition();
             XreadPosition();
-            pollDigIn1();
+            await pollDigIn1();
         }
 
         #endregion Timer methods
