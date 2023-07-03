@@ -271,12 +271,12 @@ namespace Triamec.Tam.Samples {
         async Task OnStop() {
             try {
                 _StopButton.Enabled = false;
-                _StartButton.Enabled = true;
                 var yRequest = _yAxis.Stop();
                 var xRequest = _xAxis.Stop();
                 await yRequest.WaitForSuccessAsync(moveTimeout);
                 await xRequest.WaitForSuccessAsync(moveTimeout);
                 DisableDrive();
+                _StartButton.Enabled = true;
             } catch (TamException ex) {
                 MessageBox.Show(ex.Message, Resources.MoveErrorCaption, MessageBoxButtons.OK,
                     MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, 0);
