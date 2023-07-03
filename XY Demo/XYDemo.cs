@@ -22,7 +22,7 @@ namespace Triamec.Tam.Samples {
         }
         #endregion Constructor
 
-        #region Hello world code
+        #region XY Demo code
 
         /// <summary>
         /// The name of the axis this demo works with.
@@ -278,7 +278,7 @@ namespace Triamec.Tam.Samples {
             }
         }
 
-        #endregion Hello world code
+        #endregion XY Demo code
 
         #region GUI handler methods
         #region Form handler methods
