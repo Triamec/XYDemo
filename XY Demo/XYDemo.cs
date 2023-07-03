@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Triamec.Tam.Configuration;
 using Triamec.Tam.Samples.Properties;
 using Triamec.TriaLink;
-using Triamec.TriaLink.Adapter;
 
 // Rlid19 represents the register layout of drives of the current generation. A previous generation drive has layout 4.
 using Axis = Triamec.Tam.Rlid19.Axis;
@@ -245,7 +240,7 @@ namespace Triamec.Tam.Samples {
             _xPositionBox.Text = $"{position:F2} {_xUnit}";
         }
 
-        async Task pollDigIn1() {
+        async Task PollDigIn1() {
             var yRegister = (Axis)_yAxis.Register;
             bool inputStart = yRegister.Signals.General.DigitalInputBits.DigIn4.Read();
             bool inputStop = yRegister.Signals.General.DigitalInputBits.DigIn5.Read();
@@ -317,9 +312,7 @@ namespace Triamec.Tam.Samples {
 
         #region Button handler methods
 
-        async void OnStartButtonClick(object sender, EventArgs e) {
-            await OnStart();
-        }
+        async void OnStartButtonClick(object sender, EventArgs e) => await OnStart();
 
         async void OnStopButtonClick(object sender, EventArgs e) => await OnStop();
         
@@ -334,7 +327,7 @@ namespace Triamec.Tam.Samples {
         async void OnTimerTick(object sender, EventArgs e) {
             YreadPosition();
             XreadPosition();
-            await pollDigIn1();
+            await PollDigIn1();
         }
 
         #endregion Timer methods
