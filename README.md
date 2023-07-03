@@ -19,12 +19,13 @@ In addition you need [TAM Software](https://www.triamec.com/en/tam-software-supp
 
 ## Prepare Application
 
-1. Open file `Properties > Settings.settings` (if used in a IDE) or `XY Demo.exe.config` (if used as an executable) and configure the parameters to your needs.
+1. Set the upper and lower limit in the registers for the X and Y axis (for example with the TAM System Explorer). These limits are used by the application (with some safety margin) to determine the corner points of the movement pattern.
+2. Open file `Properties > Settings.settings` (if used in a IDE) or `XY Demo.exe.config` (if used as an executable) and configure the parameters to your needs.
 
-- `xNumberOfSteps`: Number of steps in X direction according to the graph above.
-- `sleepTime`: Dwell time (in milliseconds) in between moves.
-- `yAxisName`: Name of the axis that behaves as the Y axis according to the graph above.
-- `xAxisName`: Name of the axis that behaves as the X axis according to the graph above.
+    - `xNumberOfSteps`: Number of steps in X direction. In the graph above, `xNumberOfSteps = 5`
+    - `sleepTime`: Dwell time (in milliseconds) in between moves.
+    - `yAxisName`: Name of the axis that behaves as the Y axis according to the graph above.
+    - `xAxisName`: Name of the axis that behaves as the X axis according to the graph above.
 
 1. Build/start the `XY Demo.sln` (if used in an IDE) or the `XY Demo.exe` (if used as an executable)
 
