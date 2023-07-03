@@ -144,19 +144,6 @@ namespace Triamec.Tam.Samples {
             _timer.Start();
         }
 
-        /// <summary>
-        /// Creates simulated Tria-Link adapters from a specified configuration.
-        /// </summary>
-        /// <param name="configuration">The configuration.</param>
-        /// <returns>The newly created simulated Tria-Link adapters.</returns>
-        static IEnumerable<IGrouping<Uri, ITriaLinkAdapter>> CreateSimulatedTriaLinkAdapters(
-            TamTopologyConfiguration configuration) =>
-
-            // This call must be in this extra method such that the Tam.Simulation library is only loaded
-            // when simulating. This happens when this method is jitted because the SimulationFactory is the first
-            // symbol during runtime originating from the Tam.Simulation library.
-            SimulationFactory.FromConfiguration(configuration, null);
-
 
         /// <exception cref="TamException">Disabling failed.</exception>
         void DisableDrive() {
