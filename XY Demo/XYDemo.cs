@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Triamec.Tam.Registers;
 using Triamec.Tam.Samples.Properties;
 using Triamec.TriaLink;
 
