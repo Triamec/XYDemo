@@ -49,7 +49,7 @@ namespace Triamec.Tam.Samples {
         double xStepLength;
         static readonly int xNumberOfSteps = Settings.Default.xNumberOfSteps;
         static readonly int sleepTime = Settings.Default.sleepTime;
-        TimeSpan moveTimeout = new TimeSpan(0,0,10);
+        TimeSpan moveTimeout = new TimeSpan(0, 0, 10);
         TimeSpan enableTimeout = new TimeSpan(0, 0, 10);
         //static readonly double yStartPosition = yMax;
         //static readonly double xStartPosition = xMin;
@@ -59,7 +59,7 @@ namespace Triamec.Tam.Samples {
         TamTopology _topology;
         TamAxis _yAxis;
         TamAxis _xAxis;
-        
+
         string _yUnit;
         string _xUnit;
 
@@ -93,7 +93,7 @@ namespace Triamec.Tam.Samples {
 
             // Don't load TAM configuration, assuming that the drive is already configured,
             // for example since parametrization is persisted in the drive.
-            
+
 
             // Find the axis with the configured name in the Tria-Link.
             // The AsDepthFirstLeaves extension method performs a tree search an returns all instances of type TamAxis.
@@ -110,7 +110,9 @@ namespace Triamec.Tam.Samples {
             _xAxis.ControlSystemTreatment.Override(enabled: true);
 
             _yAxis.Drive.AddStateObserver(this);
-            _xAxis.Drive.AddStateObserver(this);
+            if (_yAxis.Drive != _xAxis.Drive) {
+                _xAxis.Drive.AddStateObserver(this);
+            }
 
             // Get the register layout of the axis
             // and cast it to the RLID-specific register layout.
@@ -123,7 +125,7 @@ namespace Triamec.Tam.Samples {
 
             // Cache Position Min and Max
             yMin = yRegister.Parameters.PathPlanner.PositionMinimum.Read();
-            yMax = yRegister.Parameters.PathPlanner.PositionMaximum.Read(); 
+            yMax = yRegister.Parameters.PathPlanner.PositionMaximum.Read();
             xMin = xRegister.Parameters.PathPlanner.PositionMinimum.Read();
             xMax = xRegister.Parameters.PathPlanner.PositionMaximum.Read();
 
@@ -134,7 +136,7 @@ namespace Triamec.Tam.Samples {
             yMinReduced = yMin + yStroke * 0.01;
             xMinReduced = xMin + xStroke * 0.01;
             xMaxReduced = xMax - xStroke * 0.01;
-            xStepLength = Math.Abs(xMaxReduced-xMinReduced) / xNumberOfSteps;
+            xStepLength = Math.Abs(xMaxReduced - xMinReduced) / xNumberOfSteps;
 
             // Start displaying the position in regular intervals.
             _timer.Start();
@@ -158,15 +160,15 @@ namespace Triamec.Tam.Samples {
         /// </summary>
         /// <param name="sign">A positive or negative value indicating the direction of the motion.</param>
         /// <exception cref="TamException">Moving failed.</exception>
-        async Task MoveAxis() {  
-            
+        async Task MoveAxis() {
+
             // Set the drive operational, i.e. switch the power section on.            
             await _yAxis.Drive.SwitchOn().WaitForSuccessAsync(enableTimeout);
             await _xAxis.Drive.SwitchOn().WaitForSuccessAsync(enableTimeout);
 
             // Reset any axis error and enable the axis controller.
             await _yAxis.Control(AxisControlCommands.ResetError).WaitForSuccessAsync(enableTimeout);
-            await _xAxis.Control(AxisControlCommands.ResetError).WaitForSuccessAsync(enableTimeout);            
+            await _xAxis.Control(AxisControlCommands.ResetError).WaitForSuccessAsync(enableTimeout);
 
             // Enable axes if necessary
             if (_yAxis.ReadAxisState() == AxisState.Disabled) {
@@ -192,8 +194,7 @@ namespace Triamec.Tam.Samples {
                         if (i % 2 == 0) {
                             _yAxis.MoveAbsolute(yMinReduced).WaitForSuccess(moveTimeout);
                             await Task.Delay(sleepTime);
-                        } 
-                        else {
+                        } else {
                             _yAxis.MoveAbsolute(yMaxReduced).WaitForSuccess(moveTimeout);
                             await Task.Delay(sleepTime);
                         }
@@ -210,11 +211,9 @@ namespace Triamec.Tam.Samples {
                         }
                     }
                 }
-            } 
-            catch(AxisCommandRejectedException) {
+            } catch (AxisCommandRejectedException) {
                 //do nothing
-            } 
-            catch (CommandRejectedException) {
+            } catch (CommandRejectedException) {
                 //do nothing
             }
 
@@ -316,7 +315,7 @@ namespace Triamec.Tam.Samples {
         async void OnStartButtonClick(object sender, EventArgs e) => await OnStart();
 
         async void OnStopButtonClick(object sender, EventArgs e) => await OnStop();
-        
+
         #endregion Button handler methods
 
         #region Menu handler methods
